@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Folder } from '@/interfaces';
+import { type Folder } from '@/interfaces'
 
 const props = defineProps<{
   title: string
@@ -113,5 +113,4 @@ const confirm = () => {
 .modal__button:hover {
   background-color: var(--color-border-hover);
 }
-
 </style>

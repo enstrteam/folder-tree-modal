@@ -22,7 +22,6 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import Modal from './components/Modal.vue'
@@ -30,18 +29,21 @@ import FolderTree from './components/FolderTree.vue'
 import { mockFolders } from './store/mockFolders'
 import { type Folder } from './interfaces'
 
-
 const isModalOpen = ref(false)
 const selectedFolder = ref<Folder>()
 const tempSelectedFolder = ref<Folder>() // Временная выбранная папка
 const openFolders = ref<number[]>([]) // Хранение раскрытых папок
 
 // Функция для вычисления пути до папки
-const findFolderPath = (folders: any[], folderId: number, path: number[] = []): number[] | null => {
+const findFolderPath = (
+  folders: Folder[],
+  folderId: number,
+  path: number[] = [],
+): number[] | null => {
   for (const folder of folders) {
     const newPath = [...path, folder.id]
     if (folder.id === folderId) return newPath
-    if (folder.children) {
+    if (folder.children?.length) {
       const childPath = findFolderPath(folder.children, folderId, newPath)
       if (childPath) return childPath
     }
@@ -50,11 +52,10 @@ const findFolderPath = (folders: any[], folderId: number, path: number[] = []): 
 }
 
 const openModal = () => {
-  tempSelectedFolder.value = selectedFolder.value // Копируем текущую выбранную папку
-  if (tempSelectedFolder.value) {
-    const path = findFolderPath(mockFolders, tempSelectedFolder.value.id)
-    openFolders.value = path || [] // Открываем дерево до выбранной папки
-  }
+  tempSelectedFolder.value = selectedFolder.value
+  openFolders.value = tempSelectedFolder.value
+    ? (findFolderPath(mockFolders, tempSelectedFolder.value.id) ?? [])
+    : []
   isModalOpen.value = true
 }
 
@@ -72,8 +73,6 @@ const setTempSelectedFolder = (folder: Folder) => {
   tempSelectedFolder.value = folder // Обновляем временную папку
 }
 </script>
-
-
 
 <style scoped>
 .app__open-button {

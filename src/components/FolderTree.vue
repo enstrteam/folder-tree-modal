@@ -14,8 +14,7 @@
 
 <script setup lang="ts">
 import FolderNode from './FolderNode.vue'
-import { type Folder } from '@/interfaces';
-
+import { type Folder } from '@/interfaces'
 
 const props = defineProps<{
   folders: Folder[]

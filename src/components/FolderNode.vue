@@ -27,9 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from 'vue'
-import { type Folder } from '@/interfaces';
-
+import { computed, ref, watch } from 'vue'
+import { type Folder } from '@/interfaces'
 
 const props = defineProps<{
   folder: Folder
@@ -71,7 +70,6 @@ const select = (folder: Folder) => {
   emit('select', folder)
 }
 </script>
-
 
 <style scoped>
 .folder-node {
